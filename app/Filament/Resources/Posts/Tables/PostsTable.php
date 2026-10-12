@@ -29,25 +29,25 @@ class PostsTable
                     ->wrap(),
 
                 /**
-                 * Official Spatie tags plugin: every badge is styled from its own Tag model.
-                 */
-                SpatieTagsColumn::make('tags')
-                    ->label('Frameworks (SpatieTagsColumn)')
-                    ->type('framework')
-                    ->color(fn (Tag $relatedRecord): array => Color::hex($relatedRecord->color))
-                    ->icon(fn (Tag $relatedRecord): ?string => $relatedRecord->icon)
-                    ->tooltip(fn (Tag $relatedRecord): string => "Type: {$relatedRecord->type}"),
-
-                /**
                  * Before: the workaround from the issue looks the tag up by its name. Both
                  * "Laravel" tags resolve to the first match, so they get the same color.
                  */
-                // TextColumn::make('tag_names_before')
-                //     ->label('Tags: before (firstWhere workaround)')
-                //     ->state(fn (Post $record): array => $record->tags->pluck('name')->all())
-                //     ->badge()
-                //     ->color(fn (Post $record, string $state): array => Color::hex($record->tags->firstWhere('name', $state)->color))
-                //     ->tooltip(fn (Post $record, string $state): string => "Type: {$record->tags->firstWhere('name', $state)->type}"),
+                TextColumn::make('tag_names_before')
+                    ->label('Tags: before (firstWhere workaround)')
+                    ->state(fn (Post $record): array => $record->tags->pluck('name')->all())
+                    ->badge()
+                    ->color(fn (Post $record, string $state): array => Color::hex($record->tags->firstWhere('name', $state)->color))
+                    ->tooltip(fn (Post $record, string $state): string => "Type: {$record->tags->firstWhere('name', $state)->type}"),
+
+                /**
+                 * Official Spatie tags plugin: every badge is styled from its own Tag model.
+                 */
+                // SpatieTagsColumn::make('tags')
+                //     ->label('Frameworks (SpatieTagsColumn)')
+                //     ->type('framework')
+                //     ->color(fn (Tag $relatedRecord): array => Color::hex($relatedRecord->color))
+                //     ->icon(fn (Tag $relatedRecord): ?string => $relatedRecord->icon)
+                //     ->tooltip(fn (Tag $relatedRecord): string => "Type: {$relatedRecord->type}"),
 
                 /**
                  * After: `$relatedRecord` is the exact Tag behind each badge.
